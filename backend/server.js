@@ -1,41 +1,49 @@
-import express from "express";
-import dotenv from "dotenv";
-dotenv.config();
-import cookieParser from "cookie-parser";
-import { connectDB } from "./config/db.js";
-import cors from "cors"
-
-// IMPORT ROUTES
-import authRoutes from "./routes/auth.routes.js";
-import accountRoutes from "./routes/account.routes.js";
-
-const PORT = process.env.PORT || 3000;
-const app = express();
-
-// CORS CONFIGURATIONS
-app.use(cors({
-    origin : "http://localhost:5173",
-    credentials : true,                 //IMP - cookies allow karne ke liye
-    methods : ["GET" , "POST" , "PUT" , "DELETE"],
-    allowedHeaders : ["Content-Type" , "Authorization"]
-}));
-
-// MIDDLEWARES  
-app.use(express.json());
-app.use(express.urlencoded({ extended: true })); 
-app.use(cookieParser());
-
-// DATABASE CONNECTION
-connectDB();
-
-app.get("/" , (req , res) => {
-    res.json({message : "App is running...."});
-})
-
-app.use("/api/auth" , authRoutes);
-app.use("/api/accounts" , accountRoutes);
+    import express from "express";
+    import dotenv from "dotenv";
+    dotenv.config();
+    import cookieParser from "cookie-parser";
+    import { connectDB } from "./config/db.js";
+    import cors from "cors"
+    import path from "path";
+    import { fileURLToPath } from "url";
 
 
-app.listen(PORT , (req , res) => {
-    console.log(`Server is running on port ${PORT}`);
-})
+    // IMPORT ROUTES
+    import authRoutes from "./routes/auth.routes.js";
+    import profileRoutes from "./routes/profile.routes.js";
+
+    const PORT = process.env.PORT || 3000;
+    const app = express();
+
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+
+    // CORS CONFIGURATIONS
+    app.use(cors({
+        origin : "http://localhost:5173",
+        credentials : true,                 //IMP - cookies allow karne ke liye
+        methods : ["GET" , "POST" , "PUT" , "DELETE"],
+        allowedHeaders : ["Content-Type" , "Authorization"]
+    }));
+
+    // MIDDLEWARES  
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true })); 
+    app.use(cookieParser());
+
+    app.use("/uploads" , express.static(path.join(__dirname , "uploads")));
+
+    // DATABASE CONNECTION
+    connectDB();
+
+    app.get("/" , (req , res) => {
+        res.json({message : "App is running...."});
+    })
+
+    app.use("/api/auth" , authRoutes);
+    app.use("/api/accounts" , profileRoutes);
+
+
+    app.listen(PORT , (req , res) => {
+        console.log(`Server is running on port ${PORT}`);
+    })
