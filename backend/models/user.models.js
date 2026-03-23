@@ -2,6 +2,9 @@ import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
+    avatar : {
+        type : String
+    },
     fullname : {
         type : String,
         required : [true , "Name is required for creating your account"],
