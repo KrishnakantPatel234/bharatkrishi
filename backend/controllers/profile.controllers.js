@@ -1,6 +1,6 @@
 import User from "../models/user.models.js";
 
-const getAccountDetails = async (req, res) => {
+const getProfileDetails = async (req, res) => {
     try {
         // Fresh data from database
         const user = await User.findById(req.user._id);
@@ -24,7 +24,8 @@ const getAccountDetails = async (req, res) => {
                 business: user.business,
                 ratingcount: user.ratingcount,
                 averagerating: user.averagerating,
-                createdAt: user.createdAt
+                createdAt: user.createdAt,
+                avatar : user.avatar
             }
         });
     } catch (error) {
@@ -35,4 +36,4 @@ const getAccountDetails = async (req, res) => {
     }
 };
 
-export default getAccountDetails;
+export default getProfileDetails;
