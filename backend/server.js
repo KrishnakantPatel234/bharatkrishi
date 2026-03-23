@@ -7,6 +7,7 @@ import cors from "cors"
 
 // IMPORT ROUTES
 import authRoutes from "./routes/auth.routes.js";
+import accountRoutes from "./routes/account.routes.js";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -27,11 +28,13 @@ app.use(cookieParser());
 // DATABASE CONNECTION
 connectDB();
 
-app.use("/api/auth" , authRoutes);
-
 app.get("/" , (req , res) => {
     res.json({message : "App is running...."});
 })
+
+app.use("/api/auth" , authRoutes);
+app.use("/api/accounts" , accountRoutes);
+
 
 app.listen(PORT , (req , res) => {
     console.log(`Server is running on port ${PORT}`);
