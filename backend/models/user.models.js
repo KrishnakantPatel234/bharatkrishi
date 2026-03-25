@@ -4,12 +4,16 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     avatar : {
         type : String,
-        default : "default-person.png"
+        default : null,
     },
     fullname : {
         type : String,
         required : [true , "Name is required for creating your account"],
         trim : true
+    },
+    about : {
+        type : String,
+        trim : true,
     },
     username : {
         type : String,
@@ -30,7 +34,7 @@ const userSchema = new mongoose.Schema({
         minLength : [8 , "minimum 8 characters required"],
         select : false
     },
-    phone : {
+    contact : {
         type : String,   // ✅ String
         trim : true,
         match: [/^[0-9]{10}$/, "Please enter valid 10-digit phone number"]  // ✅ validation
@@ -61,6 +65,27 @@ const userSchema = new mongoose.Schema({
         min : 0,
         max : 5,
         default : 0
+    },
+    country : {
+        type : String,
+        default : "India",
+        trim : true,
+    },
+    streetaddress : {
+        type : String,
+        trim : true,
+    },
+    city : {
+        type : String,
+        trim : true,
+    },
+    state : {
+        type : String,
+        trim : true,
+    },
+    postalcode : {
+        type : Number,
+        trim : true
     }
 }, {
     timestamps : true
