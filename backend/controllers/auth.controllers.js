@@ -10,7 +10,7 @@ const cookieOptions = {
 
 const registerUser = async (req , res) => {
     try{
-        const {email , password , fullname , username , phone , type , business} = req.body;
+        const {email , password , fullname , username , contact , type , business , about , avatar , country , streetaddress , state ,city , postalcode} = req.body;
 
         let user = await User.findOne({
             $or : [{email} , {username}]
@@ -27,9 +27,16 @@ const registerUser = async (req , res) => {
             username : username.toLowerCase(),
             email : email.toLowerCase(),
             password,
-            phone,
+            contact,
             type,
-            business
+            business,
+            avatar,
+            about,
+            country, 
+            streetaddress , 
+            state ,
+            city , 
+            postalcode
         });
 
         const token = jwt.sign(
