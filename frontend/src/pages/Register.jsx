@@ -4,11 +4,13 @@ import { FaUserCircle } from "react-icons/fa";
 import { MdAddPhotoAlternate ,MdOutlineRemoveRedEye } from "react-icons/md";
 import { LuEyeClosed } from "react-icons/lu";
 import API from '../api.js';
+import { useNavigate, Link } from "react-router-dom"; 
 
 
 const Register = () => {
 
   const [showPassword , setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const [formData , setFormData] = useState({
     fullname : "",
@@ -52,6 +54,7 @@ const Register = () => {
       }
 
       const response = await API.post("/auth/register", data);
+      navigate("/profile")
 
       console.log(response.data);
     } catch (err) {
@@ -64,25 +67,25 @@ const Register = () => {
   return (
     <form onSubmit={handleSubmit} >
       <div className="space-y-12 m-20" >
-        <div className="border-b text-white/10 pb-12" >
-          <h2 className="text-base/7 text-semibold text-white" >Profile</h2>
-          <p className="mt-1 text-sm/6 text-gray-400" >This information will be displayed publically so be careful what you share</p>
+        <div className="border-b text-zinc-900/10 pb-12" >
+          <h2 className="text-base/7 text-semibold text-zinc-900/80 font-semibold" >Profile</h2>
+          <p className="mt-1 text-sm/6 text-gray-500" >This information will be displayed publically so be careful what you share</p>
           
           {/* username */}
           <div className=" mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-4">
-              <label htmlFor="username" className="block text-sm/6 font-medium text-white" >
+              <label htmlFor="username" className="block text-sm/6 text-zinc-800/80 font-semibold" >
                 Username
               </label>
               <div className="mt-2" >
-                <div className="flex items-center rounded-md bg-white/5 pl-3 outline-1 -outline-offset-1 outline-white/10 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-500" >
+                <div className="flex items-center rounded-md bg-white/5 pl-3 outline-1 -outline-offset-1 outline-zinc-400 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-500" >
                   <input 
                   id="username" 
                   name="username"
                   type="text"
                   value={formData.username}
                   onChange={handleChange}
-                  className="block min-w-0 grow bg-transparent py-1.5 pr-3 pl-1 text-base text-white placeholder:text-gray-500 focus:outline-none sm:text-sm/6" 
+                  className="block min-w-0 grow bg-transparent py-1.5 pr-3 pl-1 text-base text-gray-800 placeholder:text-gray-500 focus:outline-none sm:text-sm/6" 
                   placeholder="shivshankar" />
                 </div>
               </div>
@@ -92,11 +95,11 @@ const Register = () => {
           {/* password */}
           <div className=" mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-4">
-              <label htmlFor="password" className="block text-sm/6 font-medium text-white" >
+              <label htmlFor="password" className="block text-sm/6 font-semibold text-zinc-800/80" >
                 Password
               </label>
               <div className="mt-2" >
-                <div className="flex items-center rounded-md bg-white/5 pl-3 outline-1 -outline-offset-1 outline-white/10 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-500" >
+                <div className="flex items-center rounded-md bg-white/5 pl-3 outline-1 -outline-offset-1 outline-zinc-400 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-500" >
                   <input 
                   id="password" 
                   name="password"
@@ -109,7 +112,7 @@ const Register = () => {
                   type="button"
                   onClick={()=> setShowPassword(!showPassword)}
                   className="mr-2 text-gray-400" >
-                    {showPassword ? <MdOutlineRemoveRedEye className="size-5 cursor-pointer" /> : <LuEyeClosed className="size-8 cursor-pointer"/> }
+                    {showPassword ? <MdOutlineRemoveRedEye className="size-5 cursor-pointer" /> : <LuEyeClosed className="size-5 cursor-pointer"/> }
                  </button>
                 </div>
               </div>
@@ -118,7 +121,7 @@ const Register = () => {
 
           {/* about */}
           <div className="col-span-full mt-5">
-            <label htmlFor="about" className="block text-sm/6 font-medium text-white">
+            <label htmlFor="about" className="block text-sm/6 font-semibold text-zinc-800/80">
               About
             </label>
             <div className="mt-2" >
@@ -128,7 +131,7 @@ const Register = () => {
                 rows={3}
                 value={formData.about}
                 onChange={handleChange}
-                className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 "
+                className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-zinc-400 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 "
               />
             </div>
             <p className="mt-1 text-sm/6 text-gray-400" >Write a few sentences about yourself.</p>
@@ -136,12 +139,12 @@ const Register = () => {
 
           {/* photo */}
           <div className="col-span-full mt-5">
-            <label htmlFor="photo" className="block text-sm/6 font-medium text-white">
+            <label htmlFor="photo" className="block text-sm/6 font-semibold text-zinc-800/80">
               Photo
             </label>
             <div className="mt-2 flex items-center gap-x-5" >
               <FaUserCircle aria-hidden="true" className="size-12 text-gray-500" />
-              <button type="button" className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20" >
+              <button type="button" className="rounded-md bg-blue-500 cursor-pointer px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-blue-600" >
                 Change
               </button>
             </div>
@@ -149,19 +152,23 @@ const Register = () => {
 
           {/* profile picture */}
           <div className="col-span-full mt-5">
-            <label htmlFor="profile-picture" className="block text-sm/6 font-medium text-white">
+            <label htmlFor="profile-picture" className="block text-sm/6 font-semibold text-zinc-800/80">
               Profile photo
             </label>
-            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-white/25 px-6 py-10" >
-              <div className="text-center" >
+            <div className="relative mt-2 flex justify-center rounded-lg border border-dashed border-gray-400 cursor-pointer px-6 py-10" >
+              <label 
+                  htmlFor="avatar"
+                  className="absolute inset-0 cursor-pointer rounded-lg"
+                  aria-label="Upload a file"
+              />
+              <div className="text-center relative" >
                 <MdAddPhotoAlternate aria-hidden="true" className="mx-auto size-12 text-gray-600" />
                 <div className="mt-4 flex text-sm/6 text-gray-400">
-                  <label 
-                    htmlFor="avatar"
+                  <span 
                     className="relative cursor-pointer rounded-md bg-transparent font-semibold text-indigo-400 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-500 hover:text-indigo-300">
-                     <span>Upload a file</span>
+                     <span >Upload a file</span>
                      <input id="avatar" type="file" className="sr-only"/>
-                  </label>
+                  </span>
                   <p className="pl-1">or drag and drop</p>
                 </div>
                 <p className="text-xs/5 text-gray-400">PNG, JPG, GIF up to 5MB</p>
@@ -171,13 +178,13 @@ const Register = () => {
         </div>
 
         <div className="border-b text-white/10 pb-12">
-          <h2 className="text-base/7 font-semibold text-white">Personal Information</h2>
-          <p className="mt-1 text-sm/6 text-gray-400" >Use a permanent address where you can receive mail.</p>
+          <h2 className="text-base/7 font-semibold text-zinc-900/80">Personal Information</h2>
+          <p className="mt-1 text-sm/6 text-gray-500" >Use a permanent address where you can receive mail.</p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6" >
             {/* fullname */}
             <div className="sm:col-span-3">
-              <label htmlFor="fullname" className="block text-sm/6 font-medium text-white" >
+              <label htmlFor="fullname" className="block text-sm/6 font-semibold text-zinc-800/80" >
                 Full name
               </label>
               <div className="mt-2">
@@ -188,13 +195,13 @@ const Register = () => {
                   value={formData.fullname}
                   onChange={handleChange}
                   autoComplete="name"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 " 
+                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-zinc-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 " 
                 />
               </div>
             </div>
             {/* Business type */}
             <div className="sm:col-span-3">
-              <label htmlFor="type" className="block text-sm/6 font-medium text-white" >
+              <label htmlFor="type" className="block text-sm/6 font-semibold text-zinc-800/80" >
                 Business type
               </label>
               <div className="mt-2">
@@ -203,7 +210,7 @@ const Register = () => {
                   id="type"
                   value={formData.type}
                   onChange={handleChange}
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 "
+                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 "
                 >
                   <option value="" className="text-black" >
                     Select business type
@@ -225,7 +232,7 @@ const Register = () => {
             </div>
             {/* Business name */}
             <div className="sm:col-span-3">
-              <label htmlFor="business" className="block text-sm/6 font-medium text-white" >
+              <label htmlFor="business" className="block text-sm/6 font-semibold text-zinc-800/80" >
                 Business name
               </label>
               <div className="mt-2">
@@ -235,13 +242,13 @@ const Register = () => {
                   type="text"
                   value={formData.business}
                   onChange={handleChange}
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 " 
+                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 " 
                 />
               </div>
             </div>
             {/* Contact number */}
             <div className="sm:col-span-3">
-              <label htmlFor="contact" className="block text-sm/6 font-medium text-white" >
+              <label htmlFor="contact" className="block text-sm/6 font-semibold text-zinc-800/80" >
                 Contact no.
               </label>
               <div className="mt-2">
@@ -252,14 +259,14 @@ const Register = () => {
                   value={formData.contact}
                   onChange={handleChange}
                   autoComplete="tel"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 " 
+                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 " 
                 />
               </div>
             </div>
 
             {/* Email address */}
             <div className="sm:col-span-4">
-                <label htmlFor="email" className="block text-sm/6 font-medium text-white" >
+                <label htmlFor="email" className="block text-sm/6 font-semibold text-zinc-800/80" >
                   Email address
                 </label>
                 <div className="mt-2">
@@ -270,13 +277,13 @@ const Register = () => {
                     value={formData.email}
                     onChange={handleChange}
                     autoComplete='email'
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 " 
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 " 
                   />
                 </div>
             </div>
             {/* country */}
             <div className="sm:col-span-3">
-                <label htmlFor="country" className="block text-sm/6 font-medium text-white" >
+                <label htmlFor="country" className="block text-sm/6 font-semibold text-zinc-800/80" >
                   Country
                 </label>
                 <div className="mt-2">
@@ -285,7 +292,7 @@ const Register = () => {
                     id="country"
                     value={formData.country}
                     onChange={handleChange}
-                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 "
+                    className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6 "
                   >
                     <option value="" className="text-black" >
                       Country
@@ -307,7 +314,7 @@ const Register = () => {
             </div> 
             {/* street address */}
             <div className="col-span-full">
-              <label htmlFor="streetaddress" className="block text-sm/6 font-medium text-white">
+              <label htmlFor="streetaddress" className="block text-sm/6 font-semibold text-zinc-800/80">
                 Street address
               </label>
               <div className="mt-2">
@@ -318,13 +325,13 @@ const Register = () => {
                   value={formData.streetaddress}
                   onChange={handleChange}
                   autoComplete="street-address"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-400 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
               </div>
             </div> 
             {/* City */}
             <div className="sm:col-span-2 sm:col-start-1">
-              <label htmlFor="city" className="block text-sm/6 font-medium text-white">
+              <label htmlFor="city" className="block text-sm/6 font-semibold text-zinc-800/80">
                 City
               </label>
               <div className="mt-2">
@@ -335,13 +342,13 @@ const Register = () => {
                   value={formData.city}
                   onChange={handleChange}
                   autoComplete="address-level2"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-400 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
               </div>
             </div>
             {/* State */}
             <div className="sm:col-span-2">
-              <label htmlFor="state" className="block text-sm/6 font-medium text-white">
+              <label htmlFor="state" className="block text-sm/6 font-semibold text-zinc-800/80">
                 State / Province
               </label>
               <div className="mt-2">
@@ -352,13 +359,13 @@ const Register = () => {
                   value={formData.state}
                   onChange={handleChange}
                   autoComplete="state"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-400 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
               </div>
             </div>
             {/* Postal code */}
             <div className="sm:col-span-2">
-              <label htmlFor="postalcode" className="block text-sm/6 font-medium text-white">
+              <label htmlFor="postalcode" className="block text-sm/6 font-semibold text-zinc-800/80">
                 Postal code
               </label>
               <div className="mt-2">
@@ -369,7 +376,7 @@ const Register = () => {
                   value={formData.postalcode}
                   onChange={handleChange}
                   autoComplete="postal-code"
-                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-400 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
                 />
               </div>
             </div>
@@ -377,13 +384,13 @@ const Register = () => {
           </div>
         </div>
       </div>
-      <div className="mt-6 pr-20 pb-20 flex items-center justify-end gap-x-6">
-        <button type="button" className="text-sm/6 font-semibold text-white">
+      <div className="mt-6 pr-20 pb-20 flex items-center justify-end gap-x-6">  
+        <button type="button" className="rounded-md px-3 py-2 text-sm font-semibold text-white bg-zinc-600 cursor-pointer hover:bg-zinc-700">
           Cancel
         </button>
         <button
           type="submit"
-          className="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+          className="rounded-md bg-indigo-400 cursor-pointer hover:bg-indigo-500 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
         >
           Save
         </button>
