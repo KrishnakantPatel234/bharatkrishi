@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
   const navigate = useNavigate();
   const handleChange = () => {
-    navigate("/register");
+    navigate("/login");
   }
 
   return (
@@ -23,20 +23,20 @@ const Home = () => {
               <div className="mt-10 flex  gap-5">
                 <button 
                   onClick={handleChange}
-                  className="bg-green-600 shadow-xl hover:shadow-2xl transition-shadow duration-300 px-4 md:py-3 rounded-md cursor-pointer hover:bg-green-700 shadow-lg">
+                  className="bg-green-600 drop-shadow-xl/50 hover:shadow-2xl transition-shadow duration-300 px-4 md:py-3 rounded-md cursor-pointer hover:bg-green-700 shadow-lg">
                   <span className="story-script-para text-sm text-white mr-2" >
                     Get Started 
                   </span>
                   <FaArrowRightLong className="inline text-white font-thin " />
                 </button>
-                <button className="bg-zinc-200 shadow-xl hover:shadow-2xl transition-shadow duration-300 outline -outline-offest-1 outline-zinc-300 px-4 py-3 rounded-md cursor-pointer hover:bg-gray-300">
+                <button className="bg-zinc-200 drop-shadow-xl/50 hover:shadow-2xl transition-shadow duration-300 outline -outline-offest-1 outline-zinc-300 px-4 py-3 rounded-md cursor-pointer hover:bg-gray-300">
                   <span className="story-script-para text-zinc-800" >Learn more</span>
                 </button>
               </div>
             </div>
         </div>
         <div  className="md:col-span-6 col-span-12 flex justify-end items-center">
-          <div className="rounded-2xl w-3/4 mr-10 overflow-hidden shadow-2xl">
+          <div className="rounded-2xl w-3/4 mr-10 overflow-hidden drop-shadow-xl/50">
             <img className="object-cover" src="/images/indian-farmer.jpg" alt="Indian farmer smiling" />
           </div>
         </div>

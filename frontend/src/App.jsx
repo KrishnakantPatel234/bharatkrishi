@@ -5,6 +5,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Profile from "./pages/Profile.jsx";
 import Home from "./pages/Home.jsx";
+import Navbar from "./components/Navbar.jsx";
 
 const ProtectedRoute = ({children}) => {
   const {user , loading} = useAuth();
@@ -19,6 +20,7 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/login" element={<Login/>} />

@@ -2,6 +2,7 @@
 
 body {
     background-color :whitesmoke;
+    overflow-x: hidden;
     margin : 0;
     padding : 0;
 }
