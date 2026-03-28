@@ -6,7 +6,7 @@ import { updateAvatar } from "../controllers/avatar.controllers.js";
 import {Router} from "express";
 const router = Router();
 
-router.post("/register" , registerUser);
+router.post("/register", upload.single("avatar") , registerUser);
 router.post("/login" , loginUser);
 router.get("/logout" , logoutUser);
 

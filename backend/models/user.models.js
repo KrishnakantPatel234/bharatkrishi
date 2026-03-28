@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     avatar : {
         type : String,
-        default : null,
+        default : "",
     },
     fullname : {
         type : String,

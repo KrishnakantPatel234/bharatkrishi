@@ -1,6 +1,7 @@
 import User from "../models/user.models.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import cloudinary from "../config/cloudinary.js";
 
 const cookieOptions = {
     httpOnly: true,
@@ -10,7 +11,7 @@ const cookieOptions = {
 
 const registerUser = async (req , res) => {
     try{
-        const {email , password , fullname , username , contact , type , business , about , avatar , country , streetaddress , state ,city , postalcode} = req.body;
+        const {email , password , fullname , username , contact , type , business , about , country , streetaddress , state ,city , postalcode} = req.body;
 
         let user = await User.findOne({
             $or : [{email} , {username}]
@@ -22,15 +23,25 @@ const registerUser = async (req , res) => {
             });
         }
 
+        let avatarUrl = "";
+        
+        if(req.file){
+            const result = await cloudinary.uploader.upload(req.file.path , {
+                folder : "profile_pictures",
+            });
+
+            avatarUrl = result.secure_url;
+        }
+
         user = await User.create({
             fullname,
             username : username.toLowerCase(),
             email : email.toLowerCase(),
+            avatar : avatarUrl,
             password,
             contact,
             type,
             business,
-            avatar,
             about,
             country, 
             streetaddress , 
