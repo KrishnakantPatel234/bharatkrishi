@@ -18,8 +18,8 @@ const Navbar = () => {
                 <a href="/posts">
                     Posts
                 </a>
-                <a href="/buyers">
-                    Buyers
+                <a href="/connect">
+                    Connect
                 </a>
                 <a href="/aboutus">
                    About us 
