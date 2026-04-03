@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
         select : false
     },
     contact : {
-        type : String,   // ✅ String
+        type : String,   //     ✅ String
         trim : true,
         match: [/^[0-9]{10}$/, "Please enter valid 10-digit phone number"]  // ✅ validation
     },
@@ -51,11 +51,6 @@ const userSchema = new mongoose.Schema({
         type : String,
         trim : true,
     },
-    // posts array hona chahiye (ek user ke multiple posts)
-    posts : [{
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "POST"
-    }],
     ratingcount : {
         type : Number,
         default : 0,

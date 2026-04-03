@@ -47,11 +47,11 @@ const Connect = () => {
       {/* Search and filters */}
       <form onSubmit={handleSearch} action="">
         <div className="grid grid-cols-12 h-20 w-full">
-          <div className="col-span-3 flex justify-center items-center" >
+          <div className="md:col-span-3 col-span-2 font-medium flex justify-center items-center" >
              <select
               value={type}
               onChange={(e) => setType(e.target.value)}
-              className="rounded-xl border border-zinc-400 cursor-pointer px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400"
+              className="rounded-xl w-24 md:w-48 text-center border border-zinc-400 cursor-pointer md:px-4 md:py-3 ml-8 px-2 py-1 outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400"
             >
               <option value="">All Types</option>
               <option value="BUYER">Buyer</option>
@@ -60,7 +60,7 @@ const Connect = () => {
               <option value="WHOLESALE FARMER">Wholesale Farmer</option>
             </select>
           </div>
-          <div className="col-span-6 flex justify-center items-center" >
+          <div className="md:col-span-6 col-span-8 flex justify-center items-center" >
             <div className=" w-2/3 outline-1 -outline-offset-1 outline-zinc-300 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-500   rounded-lg px-4 py-1 story-script-para ">
               <input 
               type="text"
@@ -71,10 +71,10 @@ const Connect = () => {
                />
             </div>
           </div>
-          <div className="col-span-3 flex justify-center items-center" >
+          <div className="md:col-span-3 col-span-2 sm:pr-3 pr-6 flex justify-center items-center" >
             <button
               type="submit"
-              className="rounded-xl bg-blue-500 text-white px-8 py-3 font-medium hover:bg-blue-600 transition duration-300 cursor-pointer"
+              className="rounded-xl bg-blue-500 text-white md:px-8 md:py-3 px-4 py-1.5 font-medium hover:bg-blue-600 transition duration-300 cursor-pointer"
             >
               Search
             </button>

@@ -12,6 +12,7 @@
     import authRoutes from "./routes/auth.routes.js";
     import profileRoutes from "./routes/profile.routes.js";
     import userRoutes from "./routes/user.routes.js"
+    import postRoutes from "./routes/post.routes.js";
 
     const PORT = process.env.PORT || 3000;
     const app = express();
@@ -44,6 +45,7 @@
     app.use("/api/auth" , authRoutes);
     app.use("/api/accounts" , profileRoutes);
     app.use("/api/users" , userRoutes),
+    app.use("/api/posts" , postRoutes);
 
 
     app.listen(PORT , (req , res) => {

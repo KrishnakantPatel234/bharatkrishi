@@ -2,7 +2,7 @@ import User from "../models/user.models.js";
 
 const getUsers = async (req, res) => {
   try {
-    const { type, search = "" } = req.query;
+    const { type, search = "" , page = "1" , limit = "12"} = req.query;
 
     const query = {};
 
@@ -19,11 +19,21 @@ const getUsers = async (req, res) => {
       ];
     }
 
-    const users = await User.find(query).select("-password");
+    // pagination (so that all the users should not load at once)
+    const skip = (Number(page) - 1) * (Number(limit));
 
-    res.json({
+    const users = await User.find(query)
+      .select("-password")
+      .skip(skip)
+      .limit(Number(limit))
+      .sort({createdAt : -1});
+
+    const totalUsers = await User.countDocuments(query);  
+
+    res.status(200).json({
       success: true,
       users,
+      totalUsers
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
