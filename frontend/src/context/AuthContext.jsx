@@ -65,7 +65,8 @@ export const AuthProvider = ({ children }) => {
             register,
             login,
             logout,
-            updateAvatar
+            updateAvatar,
+            
         }}>
             {children}
         </AuthContext.Provider>

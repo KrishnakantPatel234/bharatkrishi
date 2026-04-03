@@ -12,14 +12,14 @@ const Navbar = () => {
                 </a>
             </div>
             <div className="flex gap-16 story items-center justify-center story-script-regular text-xl col-span-8 h-full" >
-                <a href="/profile">
-                    Profile
-                </a>
                 <a href="/posts">
-                    Posts
+                    feed
                 </a>
                 <a href="/connect">
                     Connect
+                </a>
+                <a href="/profile">
+                    Profile
                 </a>
                 <a href="/aboutus">
                    About us 

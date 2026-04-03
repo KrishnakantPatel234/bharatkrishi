@@ -12,21 +12,13 @@ const getProfileDetails = async (req, res) => {
             });
         }
         
+        // Remove password before sending
+        const userWithoutPassword = user.toObject();
+        delete userWithoutPassword.password;
+        
         res.status(200).json({
             success: true,
-            user : {
-                _id: user._id,
-                fullname: user.fullname,
-                username: user.username,
-                email: user.email,
-                phone: user.phone,
-                type: user.type,
-                business: user.business,
-                ratingcount: user.ratingcount,
-                averagerating: user.averagerating,
-                createdAt: user.createdAt,
-                avatar : user.avatar
-            }
+            user: userWithoutPassword  // ✅ All fields included
         });
     } catch (error) {
         res.status(500).json({
