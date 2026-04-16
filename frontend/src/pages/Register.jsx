@@ -68,11 +68,7 @@
           sendData.append("avatar", avatar);
         }
 
-        const response = await API.post("/auth/register", sendData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        const response = await API.post("/auth/register", sendData);
 
         console.log(response.data);
         navigate("/profile");
@@ -84,7 +80,7 @@
 
     return (
       <form onSubmit={handleSubmit} >
-        <div className="space-y-12 m-20 bg-white p-10 rounded-xl shadow-2xl" >
+        <div className="space-y-12 md:m-20 m-5 bg-white p-10 rounded-xl shadow-2xl" >
           <div className="border-b text-zinc-900/10 pb-12" >
             <h2 className="text-base/7 text-semibold text-zinc-900/80 font-semibold" >Profile</h2>
             <p className="mt-1 text-sm/6 text-gray-500" >This information will be displayed publically so be careful what you share</p>
@@ -92,7 +88,7 @@
             {/* username */}
             <div className=" mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
-                <label htmlFor="username" className="block text-sm/6 text-zinc-800/80 font-semibold" >
+                <label htmlFor="username" className="block text-sm/6 text-zinc-800/80 font-semibold after:ml-0.5 after:text-red-500 after:content-['*']" >
                   Username
                 </label>
                 <div className="mt-2" >
@@ -113,7 +109,7 @@
             {/* password */}
             <div className=" mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
-                <label htmlFor="password" className="block text-sm/6 font-semibold text-zinc-800/80" >
+                <label htmlFor="password" className="block text-sm/6 font-semibold text-zinc-800/80 after:ml-0.5 after:text-red-500 after:content-['*']" >
                   Password
                 </label>
                 <div className="mt-2" >
@@ -219,7 +215,7 @@
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6" >
               {/* fullname */}
               <div className="sm:col-span-3">
-                <label htmlFor="fullname" className="block text-sm/6 font-semibold text-zinc-800/80" >
+                <label htmlFor="fullname" className="block text-sm/6 font-semibold text-zinc-800/80 after:ml-0.5 after:text-red-500 after:content-['*']" >
                   Full name
                 </label>
                 <div className="mt-2">
@@ -236,7 +232,7 @@
               </div>
               {/* Business type */}
               <div className="sm:col-span-3">
-                <label htmlFor="type" className="block text-sm/6 font-semibold text-zinc-800/80" >
+                <label htmlFor="type" className="block text-sm/6 font-semibold text-zinc-800/80 after:ml-0.5 after:text-red-500 after:content-['*']" >
                   Business type
                 </label>
                 <div className="mt-2">
@@ -267,7 +263,7 @@
               </div>
               {/* Business name */}
               <div className="sm:col-span-3">
-                <label htmlFor="business" className="block text-sm/6 font-semibold text-zinc-800/80" >
+                <label htmlFor="business" className="block text-sm/6 font-semibold text-zinc-800/80 after:ml-0.5 after:text-red-500 after:content-['*']" >
                   Business name
                 </label>
                 <div className="mt-2">
@@ -301,7 +297,7 @@
 
               {/* Email address */}
               <div className="sm:col-span-4">
-                  <label htmlFor="email" className="block text-sm/6 font-semibold text-zinc-800/80" >
+                  <label htmlFor="email" className="block text-sm/6 font-semibold text-zinc-800/80 after:ml-0.5 after:text-red-500 after:content-['*']  " >
                     Email address
                   </label>
                   <div className="mt-2">
@@ -419,16 +415,20 @@
             </div>
           </div>
         </div>
-        <div className="mt-2 pr-20 pb-20 flex items-center justify-end gap-x-6">  
-          <button type="button" className="rounded-md px-3 py-2 text-sm font-semibold text-white bg-zinc-600 cursor-pointer hover:bg-zinc-700">
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="rounded-md bg-indigo-400 cursor-pointer hover:bg-indigo-500 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-          >
-            Save
-          </button>
+        <div className="md:mx-24 mx-8 mt-2 pb-10 flex items-center justify-between ">  
+          <div>
+            <p>already have an account <a href="/login" className="text-blue-700 cursor-pointer" >login</a> </p>
+          </div>
+          <div className="flex justify-end gap-x-6" >
+            <button type="button" className="rounded-md px-3 py-2 text-sm font-semibold text-white bg-zinc-600 cursor-pointer hover:bg-zinc-700">
+              Cancel
+            </button>
+            <button type="submit" // submit
+              className="rounded-md bg-indigo-400 cursor-pointer hover:bg-indigo-500 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            >
+              Save
+            </button>
+          </div>
         </div>
       </form>
     )

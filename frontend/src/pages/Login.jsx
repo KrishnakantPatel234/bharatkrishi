@@ -35,12 +35,12 @@ const Login = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="w-full min-h-[795px] flex justify-center items-center">
-        <div className="min-w-4/5 md:min-w-1/3 min-h-[500px] bg-white/5 rounded-xl shadow-2xl ">
+        <div className="min-w-4/5 md:min-w-1/3 min-h-[500px] story-script-para bg-white/5 rounded-xl shadow-2xl ">
           {/* email field */}
           <div className="m-10 mt-20" >
             <label 
               htmlFor="email"
-              className="story-script-para"
+              className="after:ml-0.5 after:text-red-500 after:content-['*']"
             >
               Email
             </label>
@@ -62,7 +62,7 @@ const Login = () => {
           <div className="m-10" >
             <label 
               htmlFor="password"
-              className="story-script-para"
+              className="after:ml-0.5 after:text-red-500 after:content-['*']"
             >
               Password
             </label>

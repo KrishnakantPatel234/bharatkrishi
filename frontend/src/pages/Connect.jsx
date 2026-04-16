@@ -15,7 +15,7 @@ const Connect = () => {
 
       const query = new URLSearchParams();
 
-      if(search.trim()){
+      if(search.trim()){    
         query.append(`search` , search);
       }
       if(type){
@@ -74,7 +74,7 @@ const Connect = () => {
           <div className="md:col-span-3 col-span-2 sm:pr-3 pr-6 flex justify-center items-center" >
             <button
               type="submit"
-              className="rounded-xl bg-blue-500 text-white md:px-8 md:py-3 px-4 py-1.5 font-medium hover:bg-blue-600 transition duration-300 cursor-pointer"
+              className="rounded-xl bg-blue-500 text-white md:px-8 mdz` :py-3 px-4 py-1.5 font-medium hover:bg-blue-600 transition duration-300 cursor-pointer"
             >
               Search
             </button>

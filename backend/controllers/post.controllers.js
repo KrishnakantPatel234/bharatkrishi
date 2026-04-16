@@ -5,6 +5,13 @@ const createNewPost = async (req , res) => {
     try{
         const {title, description, likes, views, price, category, quantity, quantityunit} = req.body;
 
+        if(!title || !description || !category) {
+            return res.status(400).json({
+                success: false,
+                message: "Title, description, and category are required"
+            });
+        }
+
         let pictureUrl = "";
 
         if(req.file){
@@ -27,7 +34,7 @@ const createNewPost = async (req , res) => {
             quantity, 
             quantityunit
         })
-
+        console.log(post);
         res.status(201).json({
             success : true,
             message : "Post created successfully",
@@ -36,6 +43,7 @@ const createNewPost = async (req , res) => {
     }
     catch(error){
         res.status(500).json({
+            success: false,
             message : error.message
         });
     }
@@ -94,16 +102,19 @@ const getMyPosts = async(req , res) => {
     try{
         const userId = req.user._id;
 
-        const posts = await Post.findById({createdby : userId}).sort({createdAt : -1});
+        const posts = await Post.find({ createdby: userId })
+            .populate("createdby", "fullname avatar username")    
+            .sort({ createdAt: -1 });
 
-        if(!posts){
-            return res.status(404).json({
-                message : "No post found"
-            })
+        if(posts.length === 0){
+            res.status(200).json({
+                success: true,
+                posts
+            });
         }
 
         res.status(200).json({
-            successs : true,
+            success : true,
             posts
         })
     }

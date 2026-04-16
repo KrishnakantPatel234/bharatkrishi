@@ -5,7 +5,7 @@ import cloudinary from "../config/cloudinary.js";
 
 const cookieOptions = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "development",
+    secure: process.env.NODE_ENV === "production",
     sameSite: "lax"
 };
 
@@ -50,6 +50,9 @@ const registerUser = async (req , res) => {
             postalcode
         });
 
+        console.log("BODY:", req.body);
+        console.log("FILE:", req.file);
+        
         const token = jwt.sign(
             {userId : user._id , type : user.type},
             process.env.JWT_SECRET,
