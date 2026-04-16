@@ -36,7 +36,7 @@
     app.use("/uploads" , express.static(path.join(__dirname , "uploads")));
 
     // DATABASE CONNECTION
-    connectDB();
+    connectDB().catch(err => console.error('Database connection failed:', err));
 
     app.get("/" , (req , res) => {
         res.json({message : "App is running...."});
@@ -44,10 +44,10 @@
 
     app.use("/api/auth" , authRoutes);
     app.use("/api/accounts" , profileRoutes);
-    app.use("/api/users" , userRoutes),
+    app.use("/api/users" , userRoutes);
     app.use("/api/posts" , postRoutes);
 
 
-    app.listen(PORT , (req , res) => {
+    app.listen(PORT , ( ) => {
         console.log(`Server is running on port ${PORT}`);
     })

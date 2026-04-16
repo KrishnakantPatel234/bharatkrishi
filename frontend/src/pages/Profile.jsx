@@ -1,8 +1,39 @@
-import React from 'react'
+import React, { useState , useEffect } from 'react'
 import {useAuth} from "../hooks/useAuth.js"
+import { useNavigate } from 'react-router-dom';
+import PostCard from '../components/PostCard.jsx';
+import API from '../api.js';
 
 const Profile = () => {
+  const navigate = useNavigate();
   const {user} = useAuth();
+
+  const [loading , setLoading] = useState(false);
+  const [posts , setPosts] = useState([]);
+
+  const fetchPosts = async () => {
+      try{
+        setLoading(true);
+
+        const userId = user._id;
+
+        const response = await API.get(`/accounts/${userId}/posts`);
+        setPosts(response.data.posts);
+      }
+      catch(error){
+        console.log("Error : " , error.message);
+      }
+      finally{
+        setLoading(false);
+      }
+  }
+  useEffect(() => {
+    fetchPosts();
+  } , [user]);
+
+  const createNewPost = () => {
+    navigate("/posts");
+  }
 
   console.log(user);
 
@@ -80,7 +111,7 @@ const Profile = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <p className="font-semibold">Total Posts:</p>
-                <p className="text-2xl">{user.posts?.length || 0}</p>
+                <p className="text-2xl">{posts?.length || 0}</p>
               </div>
               <div>
                 <p className="font-semibold">Member Since:</p>
@@ -93,6 +124,49 @@ const Profile = () => {
             </div>
           </div>
           
+        </div>
+      </div>
+      <div className="p-4 w-full min-h-screen " >
+        <div className="w-full min-h-screen " >
+          <div className="text-lg flex gap-8 md:justify-start justify-around " >
+            <button type="button"
+              className="px-5 py-2 bg-white/10 cursor-pointer shadow-xl/20 hover:shadow-xl/40 rounded-lg text-gray-800/80 " >
+              Posts
+            </button>
+            <button
+            onClick={createNewPost}
+            className="px-5 py-2 bg-blue-500 cursor-pointer shadow-xl/40 hover:shadow-xl/60 rounded-lg text-white/90"
+            >
+              Create Post
+            </button>
+          </div>
+          <div>
+            <div className="w-full min-h-screen  rounded-lg" >
+                {loading ? (
+                <div className="text-center py-20 text-zinc-600 text-lg">
+                    Loading Posts...
+                </div>
+                ) : posts.length > 0 ? (
+                <div 
+                    className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 px-8 pt-10"
+                >
+                    {posts.map((post) => (
+                    <PostCard key={post._id} post={post} />
+                    ))}
+                </div>
+                ) : (
+                <div className="text-center items-center py-20">
+                    <h2 className="text-xl font-semibold text-zinc-700">No Post Found </h2>
+                    <button
+                    onClick={createNewPost}
+                    className="px-5 py-2 bg-blue-500 cursor-pointer shadow-xl/40 hover:shadow-xl/60 rounded-lg text-white/90"
+                    >
+                      Create First Post
+                    </button>
+                </div>
+                )}          
+            </div>
+          </div>
         </div>
       </div>
     </div>

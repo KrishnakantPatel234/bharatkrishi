@@ -1,14 +1,17 @@
 import React from "react";
-import { MapPin, Phone, Globe, FileText } from "lucide-react";
+import { MapPin, Phone, Globe } from "lucide-react";
 
 const UserCard = ({ user }) => {
   return (
-    <div 
-    className="group bg-white/90 backdrop-blur-sm rounded-2xl drop-shadow-2xl hover:shadow-2xl  transition-all duration-300 p-5">
-      <div className="flex gap-5">
+    <div className="group relative bg-white/70 backdrop-blur-md border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+      
+      {/* subtle glow (less aggressive) */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition"></div>
+
+      <div className="relative flex gap-4">
         
-        {/* Left: Avatar */}
-        <div className="w-24 h-24 shrink-0 rounded-2xl overflow-hidden bg-zinc-100 border border-zinc-200 shadow-xl ring-2 ring-white">
+        {/* Avatar */}
+        <div className="w-16 h-16 shrink-0 rounded-full overflow-hidden ring-1 ring-gray-200 group-hover:ring-blue-400 transition">
           <img
             src={user.avatar || "/images/default-user.png"}
             alt={user.fullname}
@@ -16,61 +19,55 @@ const UserCard = ({ user }) => {
           />
         </div>
 
-        {/* Right: Details */}
-        <div className="flex-1 min-w-0">
-          
-          {/* Name + Username + Type */}
-          <div className="flex items-start justify-between gap-3">
+        {/* Content */}
+        <div className="flex-1 min-w-0 space-y-2.5">
+
+          {/* Header */}
+          <div className="flex justify-between items-start">
             <div className="min-w-0">
-              <h2 className="text-xl font-semibold text-zinc-900 tracking-tight truncate">
+              <h2 className="text-base font-semibold text-gray-900 truncate">
                 {user.fullname || "Unknown User"}
               </h2>
-              <p className="text-sm text-zinc-500 mt-0.5 truncate">
+              <p className="text-sm text-gray-500 truncate">
                 @{user.username || "username"}
               </p>
             </div>
 
-            <span className="shrink-0 inline-flex items-center rounded-full bg-zinc-900 text-white text-[11px] font-medium px-3 py-1">
+            <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 shrink-0">
               {user.type || "User"}
             </span>
           </div>
 
           {/* Business */}
-          <div className="mt-4">
-            <span className="inline-flex items-center rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700 border border-indigo-100">
-              {user.business || "No Business"}
-            </span>
-          </div>
+          {user.business && (
+            <p className="text-sm text-gray-600 truncate">
+              {user.business}
+            </p>
+          )}
 
-          {/* Info Section */}
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-zinc-700">
-            <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-zinc-400" />
-              <span>{user.city || "N/A"}</span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <Globe className="w-4 h-4 text-zinc-400" />
-              <span>{user.country || "N/A"}</span>
-            </div>
-
-            <div className="flex items-center gap-2 sm:col-span-2">
-              <Phone className="w-4 h-4 text-zinc-400" />
-              <span>{user.contact || "N/A"}</span>
-            </div>
+          {/* Info */}
+          <div className="flex flex-wrap gap-2 text-sm text-gray-600">
+            <Info icon={<MapPin size={14} />} text={user.city} />
+            <Info icon={<Globe size={14} />} text={user.country} />
+            <Info icon={<Phone size={14} />} text={user.contact} />
           </div>
 
           {/* About */}
-          <div className="mt-4 border-t border-zinc-100 pt-4">
-            <div className="flex items-start gap-2">
-              <FileText className="w-4 h-4 text-zinc-400 mt-0.5 shrink-0" />
-              <p className="text-sm text-zinc-600 leading-relaxed line-clamp-3">
-                {user.about || "No description available."}
-              </p>
-            </div>
-          </div>
+          <p className="text-sm text-gray-500 line-clamp-2 pt-2 border-t border-gray-100">
+            {user.about || "No description available."}
+          </p>
         </div>
       </div>
+    </div>
+  );
+};
+
+const Info = ({ icon, text }) => {
+  if (!text) return null;
+  return (
+    <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-gray-50">
+      <span className="text-gray-400">{icon}</span>
+      <span className="truncate">{text}</span>
     </div>
   );
 };

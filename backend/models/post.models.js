@@ -44,7 +44,7 @@ const postSchema = new mongoose.Schema({
     },
     picture : {
         type : String,
-        default : "",
+        default : null,
     },
     category : {
         type : String,
@@ -57,7 +57,7 @@ const postSchema = new mongoose.Schema({
     },
     quantityunit : {
         type : String,
-        enum : ["kg", "quintal", "ton", "liters", "pieces"],
+        enum : ["kg", "quintal", "ton", "liters", "pieces" , "dozen"],
         default : "kg"
     },
     price : {
