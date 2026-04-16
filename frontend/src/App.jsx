@@ -10,6 +10,7 @@ import Connect from "./pages/Connect.jsx";
 import CreatePost from "./pages/CreatePost.jsx";
 import Explore from "./pages/Explore.jsx";
 import Footer from "./components/Footer.jsx";
+import About from "./pages/About.jsx";
 
 const ProtectedRoute = ({children}) => {
   const {user , loading} = useAuth();
@@ -31,6 +32,7 @@ function App() {
           <Route path="/register" element={<Register/>} />
           <Route path="/connect" element={<Connect  />} />
           <Route path="/explore" element={<Explore/>} />
+          <Route path="/aboutus" element={<About />} />
           <Route path="/profile" element={
             <ProtectedRoute>
               <Profile/>
