@@ -5,5 +5,6 @@ const router = Router();
 
 router.get("/" , getUsers);
 router.get("/:id" , getUser);
+router.get("/:id/posts" , );
 
 export default router;
