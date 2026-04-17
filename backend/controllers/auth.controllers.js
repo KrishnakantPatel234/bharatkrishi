@@ -23,6 +23,18 @@ const registerUser = async (req , res) => {
             });
         }
 
+        const formatPhone = (contact) => {
+        let cleaned = contact.replace(/\D/g, "");
+
+        if (cleaned.length === 10) {
+            return "91" + cleaned;
+        }
+
+        return cleaned;
+        };
+
+        contact = formatPhone(contact);
+
         let avatarUrl = "";
         
         if(req.file){
