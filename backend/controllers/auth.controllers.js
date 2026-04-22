@@ -61,9 +61,6 @@ const registerUser = async (req , res) => {
             city , 
             postalcode
         });
-
-        console.log("BODY:", req.body);
-        console.log("FILE:", req.file);
         
         const token = jwt.sign(
             {userId : user._id , type : user.type},
@@ -94,7 +91,7 @@ const loginUser = async (req ,res) => {
     try{
         const {email , username , password} = req.body;
 
-        const user = await User.findOne({
+        let user = await User.findOne({
             $or : [{email} , {username}]
         }).select("+password");
 

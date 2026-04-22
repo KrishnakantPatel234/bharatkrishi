@@ -4,7 +4,7 @@ const getUsers = async (req, res) => {
   try {
     const { type, search = "" , page = "1" , limit = "12"} = req.query;
 
-    const query = {};
+    let query = {};
 
     if (type) {
       query.type = type;
@@ -65,8 +65,6 @@ const getUser = async (req , res) => {
 }
 
 export {
-    // getBuyers,
-    // getFarmers,
     getUsers,
     getUser
 }

@@ -53,7 +53,7 @@ const getAllPosts = async (req , res) => {
     try{
         const { category , search = "" , page = "1" , limit = "16"} = req.query;
 
-        const query = {};
+        let query = {};
 
         if(category){
             query.category = category;
