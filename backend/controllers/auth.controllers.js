@@ -33,7 +33,7 @@ const registerUser = async (req , res) => {
         return cleaned;
         };
 
-        contact = formatPhone(contact);
+        const formattedContact = formatPhone(contact);
 
         let avatarUrl = "";
         
@@ -51,7 +51,7 @@ const registerUser = async (req , res) => {
             email : email.toLowerCase(),
             avatar : avatarUrl,
             password,
-            contact,
+            contact : formattedContact,
             type,
             business,
             about,
