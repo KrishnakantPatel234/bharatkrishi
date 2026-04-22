@@ -1,16 +1,17 @@
 import User from "../models/user.models.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import cloudinary from "../config/cloudinary.js";
 
 const cookieOptions = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "development",
+    secure: process.env.NODE_ENV === "production",
     sameSite: "lax"
 };
 
 const registerUser = async (req , res) => {
     try{
-        const {email , password , fullname , username , phone , type , business} = req.body;
+        const {email , password , fullname , username , contact , type , business , about , country , streetaddress , state ,city , postalcode} = req.body;
 
         let user = await User.findOne({
             $or : [{email} , {username}]
@@ -22,16 +23,48 @@ const registerUser = async (req , res) => {
             });
         }
 
+        const formatPhone = (contact) => {
+        let cleaned = contact.replace(/\D/g, "");
+
+        if (cleaned.length === 10) {
+            return "91" + cleaned;
+        }
+
+        return cleaned;
+        };
+
+        contact = formatPhone(contact);
+
+        let avatarUrl = "";
+        
+        if(req.file){
+            const result = await cloudinary.uploader.upload(req.file.path , {
+                folder : "profile_pictures",
+            });
+
+            avatarUrl = result.secure_url;
+        }
+
         user = await User.create({
             fullname,
             username : username.toLowerCase(),
             email : email.toLowerCase(),
+            avatar : avatarUrl,
             password,
-            phone,
+            contact,
             type,
-            business
+            business,
+            about,
+            country, 
+            streetaddress , 
+            state ,
+            city , 
+            postalcode
         });
 
+        console.log("BODY:", req.body);
+        console.log("FILE:", req.file);
+        
         const token = jwt.sign(
             {userId : user._id , type : user.type},
             process.env.JWT_SECRET,

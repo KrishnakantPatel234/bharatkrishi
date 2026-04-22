@@ -1,38 +1,53 @@
-import express from "express";
-import dotenv from "dotenv";
-dotenv.config();
-import cookieParser from "cookie-parser";
-import { connectDB } from "./config/db.js";
-import cors from "cors"
+    import dotenv from "dotenv";
+    dotenv.config();
+    import express from "express";
+    import cookieParser from "cookie-parser";
+    import { connectDB } from "./config/db.js";
+    import cors from "cors"
+    import path from "path";
+    import { fileURLToPath } from "url";
 
-// IMPORT ROUTES
-import authRoutes from "./routes/auth.routes.js";
 
-const PORT = process.env.PORT || 3000;
-const app = express();
+    // IMPORT ROUTES
+    import authRoutes from "./routes/auth.routes.js";
+    import profileRoutes from "./routes/profile.routes.js";
+    import userRoutes from "./routes/user.routes.js"
+    import postRoutes from "./routes/post.routes.js";
 
-// CORS CONFIGURATIONS
-app.use(cors({
-    origin : "http://localhost:5173",
-    credentials : true,                 //IMP - cookies allow karne ke liye
-    methods : ["GET" , "POST" , "PUT" , "DELETE"],
-    allowedHeaders : ["Content-Type" , "Authorization"]
-}));
+    const PORT = process.env.PORT || 3000;
+    const app = express();
 
-// MIDDLEWARES  
-app.use(express.json());
-app.use(express.urlencoded({ extended: true })); 
-app.use(cookieParser());
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
 
-// DATABASE CONNECTION
-connectDB();
+    // CORS CONFIGURATIONS
+    app.use(cors({
+        origin : "http://localhost:5173",
+        credentials : true,                 //IMP - cookies allow karne ke liye
+        methods : ["GET" , "POST" , "PUT" , "DELETE"],
+        allowedHeaders : ["Content-Type" , "Authorization"]
+    }));
 
-app.use("/api/auth" , authRoutes);
+    // MIDDLEWARES  
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true })); 
+    app.use(cookieParser());
 
-app.get("/" , (req , res) => {
-    res.json({message : "App is running...."});
-})
+    app.use("/uploads" , express.static(path.join(__dirname , "uploads")));
 
-app.listen(PORT , (req , res) => {
-    console.log(`Server is running on port ${PORT}`);
-})
+    // DATABASE CONNECTION
+    connectDB().catch(err => console.error('Database connection failed:', err));
+
+    app.get("/" , (req , res) => {
+        res.json({message : "App is running...."});
+    })
+
+    app.use("/api/auth" , authRoutes);
+    app.use("/api/accounts" , profileRoutes);
+    app.use("/api/users" , userRoutes);
+    app.use("/api/posts" , postRoutes);
+
+
+    app.listen(PORT , ( ) => {
+        console.log(`Server is running on port ${PORT}`);
+    })
