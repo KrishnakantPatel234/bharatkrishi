@@ -2,9 +2,11 @@ import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import API from '../api'
+import { useAuth } from '../hooks/useAuth.js'
 
 const Login = () => {
   const navigate = useNavigate();
+  const {login} = useAuth();
 
   const [formData , setFormData] = useState({
     email : "",
@@ -23,8 +25,10 @@ const Login = () => {
 
     try{
 
-      const response = await API.post("/auth/login" , formData);
-      console.log(response.data)
+      // const response = await API.post("/auth/login" , formData , {
+      //   withCredentials: true
+      // });
+      await login(formData);
       navigate("/profile");
     }catch(error){
       console.error("Something went wrong : ", error.response?.data || error.message);
@@ -50,6 +54,7 @@ const Login = () => {
                   id="email" 
                   name="email" 
                   type="email" 
+                  autoComplete="email"
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="jhondoe@example.com"
@@ -72,6 +77,7 @@ const Login = () => {
                   id="password" 
                   name="password" 
                   type="password" 
+                  autoComplete="current-password"
                   value={formData.password}
                   onChange={handleChange} 
                   className="block min-w-0 grow bg-transparent py-1.5 pr-3 pl-1 outline-none focus:outline-none placeholder:text-gray-400 w-full"
@@ -92,7 +98,9 @@ const Login = () => {
           </div>
 
           <div className="mt-15 flex justify-center">
-            <button type="submit" className="bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-600">
+            <button 
+            type="submit" 
+            className="bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-600">
               Signin
             </button>
           </div>

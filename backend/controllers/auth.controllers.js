@@ -5,7 +5,7 @@ import cloudinary from "../config/cloudinary.js";
 
 const cookieOptions = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: false,
     sameSite: "lax"
 };
 
@@ -117,7 +117,7 @@ const loginUser = async (req ,res) => {
 
         res.cookie("token" , token , {
             ...cookieOptions,
-            maxAge :  5 * 24 * 60 * 60 * 1000       // 5 days
+            maxAge :  3 * 24 * 60 * 60 * 1000       
         });
 
         user.password = undefined;
@@ -125,8 +125,7 @@ const loginUser = async (req ,res) => {
         res.status(200).json({
             success : true,
             message : "User logged in successfully",
-            user,
-            token
+            user
         })
     }
     catch(error){

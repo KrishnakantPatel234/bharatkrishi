@@ -6,38 +6,44 @@ import API from '../api.js';
 
 const Profile = () => {
   const navigate = useNavigate();
-  const {user} = useAuth();
+  const { user, loading } = useAuth();
 
-  const [loading , setLoading] = useState(false);
+  if (loading) return <div>Loading...</div>;
+
+  if (!user) return <Navigate to="/login" />;
+
+  const [postLoading , setPostLoading] = useState(false);
   const [posts , setPosts] = useState([]);
 
   const fetchPosts = async () => {
       try{
-        setLoading(true);
+        setPostLoading(true);
 
+        if (!user) return;
         const userId = user._id;
 
-        const response = await API.get(`/accounts/${userId}/posts`);
+        const response = await API.get(`/accounts/${userId}/posts` , {
+          withCredentials: true
+        });
         setPosts(response.data.posts);
       }
       catch(error){
         console.log("Error : " , error.message);
       }
       finally{
-        setLoading(false);
+        setPostLoading(false);
       }
   }
   useEffect(() => {
-    fetchPosts();
-  } , [user]);
+    if (user) {
+      fetchPosts();
+    }
+  }, [user]);
 
   const createNewPost = () => {
     navigate("/posts");
   }
 
-  console.log(user);
-
-  if(!user) return <div>No User Data</div>
 
   return (
     <div className="w-full min-h-screen bg-white story-script-para">
@@ -142,7 +148,7 @@ const Profile = () => {
           </div>
           <div>
             <div className="w-full min-h-screen  rounded-lg" >
-                {loading ? (
+                {postLoading ? (
                 <div className="text-center py-20 text-zinc-600 text-lg">
                     Loading Posts...
                 </div>

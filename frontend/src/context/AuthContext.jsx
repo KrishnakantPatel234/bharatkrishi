@@ -8,23 +8,19 @@ export const AuthProvider = ({ children }) => {
     const [user , setUser] = useState(null);
     const [loading , setLoading] = useState(true);
 
-    // check whetether the user is logged in or not on every refresh
+   
     useEffect(() => {
         const checkAuth = async () => {
             try{
                 const response = await API.get("/auth/profile");
                 setUser(response.data.user);
-
-                 // ✅ Token already saved hai? Check karo
-                const token = localStorage.getItem('token');
-                console.log("Token exists on refresh:", !!token);
             }
             catch(error){
                 if (error.response?.status === 401) {
-                console.log("No active session");  // silent fail
-                } else {
-                    console.log("Auth check error:", error);
+                    setUser(null);
+                    return; 
                 }
+                console.error("Auth error:", error);
                 setUser(null);
             }
             finally{
@@ -37,47 +33,23 @@ export const AuthProvider = ({ children }) => {
     const register = async (userData) => {
         const response = await API.post("/auth/register" , userData);
         
-        // ✅ Save token
-        if(response.data.token) {
-            localStorage.setItem('token', response.data.token);
-            console.log("Token saved after register");
-        }
-        
         setUser(response.data.user);
         return response.data;
     }
 
-    const login = async (credentials) => {
-        const response = await API.post("/auth/login" , credentials);
-        
-        // ✅ IMPORTANT: Save token
-        if(response.data.token) {
-            localStorage.setItem('token', response.data.token);
-            console.log("Token saved after login");
-        }
-        
+   const login = async (credentials) => {
+        await API.post("/auth/login", credentials);
+
+        // Re-fetch because cookies are not available quickly
+        const response = await API.get("/auth/login", credentials);
         setUser(response.data.user);
-        return response.data;  // ✅ Fix: response.data return karo, response.user nahi
+        return response.data;
     }
 
 
     const logout = async () => {
         await API.get("/auth/logout");
-        
-        // ✅ Clear token on logout
-        localStorage.removeItem('token');
         setUser(null);
-    }
-
-    const updateAvatar = async (file) => {
-        const formData = new FormData();
-        formData.append("avatar" , file);
-
-        const response = await API.post("/auth/upload-profile" , formData , {
-            headers : { "Content-Type" : "multipart/form-data" }
-        });
-        setUser(response.data.user);
-        return response.data;
     }
 
     return (
@@ -87,7 +59,6 @@ export const AuthProvider = ({ children }) => {
             register,
             login,
             logout,
-            updateAvatar,
             
         }}>
             {children}

@@ -95,7 +95,7 @@ const Navbar = () => {
                 />
                 <button
                   onClick={handleLogout}
-                  className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg"
+                  className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 cursor-pointer rounded-lg"
                 >
                   Logout
                 </button>
@@ -103,7 +103,7 @@ const Navbar = () => {
             ) : (
               <button
                 onClick={() => navigate("/login")}
-                className="px-4 py-2 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700"
+                className="px-4 py-2 text-sm bg-green-600 text-white rounded-lg cursor-pointer hover:bg-green-700"
               >
                 Sign In
               </button>

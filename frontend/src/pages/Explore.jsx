@@ -82,7 +82,7 @@ const Explore = () => {
                 </div>
                 </div>
             </form>
-            <div className="w-full h-screen  rounded-lg" >
+            <div className="w-full min-h-screen  rounded-lg" >
                 {loading ? (
                 <div className="text-center py-20 text-zinc-600 text-lg">
                     Loading users...

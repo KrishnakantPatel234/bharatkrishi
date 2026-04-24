@@ -22,8 +22,9 @@
 
     // CORS CONFIGURATIONS
     app.use(cors({
-        origin : 'https://bharatkrishimarket.vercel.app',
-        credentials : true,                 //IMP - cookies allow karne ke liye
+        origin : 'http://localhost:5173',
+        // origin : 'https://bharatkrishimarket.vercel.app',
+        credentials : true,                 
         methods : ["GET" , "POST" , "PUT" , "DELETE"],
         allowedHeaders : ["Content-Type" , "Authorization"]
     }));
