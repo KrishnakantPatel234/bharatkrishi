@@ -1,32 +1,5 @@
 import mongoose from "mongoose"
 
-const replySchema = new mongoose.Schema({
-    user : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "User",
-        required : true,
-    },
-    text : {
-        type : String,
-        required : true,
-        trim : true,
-    }
-},{timestamps : true});
-
-const commentSchema = new mongoose.Schema({
-    user : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "User",
-        required : true,
-    },
-    text : {
-        type : String,
-        required : true,
-        trim : true,
-    },
-    replies : [replySchema],
-}, {timestamps : true});
-
 const postSchema = new mongoose.Schema({
     createdby : {
         type : mongoose.Schema.Types.ObjectId,
@@ -72,10 +45,17 @@ const postSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "User"
     }],
-    comments : [commentSchema]
+    comments : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Comment",
+    }]
 },{
     timestamps : true
 })
+
+postSchema.index({ createdby: 1, createdAt: -1 });
+postSchema.index({ category: 1 });
+postSchema.index({ price: 1 });
 
 const Post = mongoose.model("Post" , postSchema);
 export default Post;

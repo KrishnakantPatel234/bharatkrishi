@@ -1,30 +1,45 @@
 import React, { useState , useEffect } from 'react'
 import {useAuth} from "../hooks/useAuth.js"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PostCard from '../components/PostCard.jsx';
 import API from '../api.js';
 
 const Profile = () => {
+  const [postLoading , setPostLoading] = useState(false);
+  const [profile, setProfile] = useState(null);
+  const [posts , setPosts] = useState([]);
+
+  const {id} = useParams();
   const navigate = useNavigate();
   const { user, loading } = useAuth();
 
-  if (loading) return <div>Loading...</div>;
+  useEffect(() => {
+    const fetchProfile = async() => {
+      try{
+        let response;
+        if(id){
+          response = await API.get(`/users/${id}`);
+        }else{
+          response = await API.get(`/users/profile`)
+        }
 
-  if (!user) return <Navigate to="/login" />;
-
-  const [postLoading , setPostLoading] = useState(false);
-  const [posts , setPosts] = useState([]);
+        setProfile(response.data.user);
+      }
+      catch(error){
+        console.log(error);
+      }
+    }
+    fetchProfile();
+  }, [id]);
 
   const fetchPosts = async () => {
       try{
         setPostLoading(true);
 
-        if (!user) return;
-        const userId = user._id;
+        const userId = id ?? user?._id;
+        if (!userId) return;
 
-        const response = await API.get(`/accounts/${userId}/posts` , {
-          withCredentials: true
-        });
+        const response = await API.get(`/users/${userId}/posts`);
         setPosts(response.data.posts);
       }
       catch(error){
@@ -34,16 +49,20 @@ const Profile = () => {
         setPostLoading(false);
       }
   }
+
   useEffect(() => {
-    if (user) {
       fetchPosts();
-    }
-  }, [user]);
+  }, [id]);
+
+  const isOwnProfile = !id || user?._id === id;
+
+  if (loading) return <div>Loading...</div>;
 
   const createNewPost = () => {
     navigate("/posts");
   }
 
+  if (!profile) return <div>Loading profile...</div>;
 
   return (
     <div className="w-full min-h-screen bg-white story-script-para">
@@ -51,19 +70,19 @@ const Profile = () => {
         {/* Left Column - Profile Image and Basic Info */}
         <div className="md:col-span-4 col-span-12 bg-white/10 border border-zinc-200 shadow-2xl/40 hover:shadow-2xl/60 rounded-lg p-6 flex flex-col justify-center items-center" >
           <div className="w-42 h-42 rounded-full border border-zinc-400 shadow-2xl overflow-hidden">
-            <img className="w-full h-full object-cover" src={user.avatar || "/default-avatar.png"} alt={user.fullname} />
+            <img className="w-full h-full object-cover" src={profile.avatar || "/default-avatar.png"} alt={profile.fullname} />
           </div>
-          <h2 className="story-script-regular text-2xl font-bold mt-4 text-center">{user.fullname}</h2>
-          <p className="text-gray-600 mt-2">@{user.username}</p>
-          <p className="text-sm bg-zinc-400 px-3 py-1 rounded-full mt-2">{user.type}</p>
+          <h2 className="story-script-regular text-2xl font-bold mt-4 text-center">{profile.fullname}</h2>
+          <p className="text-gray-600 mt-2">@{profile.username}</p>
+          <p className="text-sm bg-zinc-400 px-3 py-1 rounded-full mt-2">{profile.type}</p>
           
           {/* Rating Section - Only show if ratings exist */}
-          {(user.averagerating > 0 || user.ratingcount > 0) && (
+          {(profile.averagerating > 0 || profile.ratingcount > 0) && (
             <div className="mt-4 text-center">
               <div className="flex items-center gap-1">
                 <span className="text-yellow-500">★</span>
-                <span>{user.averagerating}</span>
-                <span className="text-gray-600">({user.ratingcount || 0} ratings)</span>
+                <span>{profile.averagerating}</span>
+                <span className="text-gray-600">({profile.ratingcount || 0} ratings)</span>
               </div>
             </div>
           )}
@@ -76,37 +95,37 @@ const Profile = () => {
           <div className="grid grid-cols-12 gap-4 " >
             <div className="col-span-12 md:col-span-6 p-4 rounded-lg bg-white/10 border border-zinc-200 shadow-2xl/20 hover:shadow-2xl/60">
               <h3 className="font-bold text-lg mb-2 border-b pb-2">Contact Information</h3>
-              <p><span className="font-semibold">Email:</span> {user.email}</p>
-              {user.contact && <p><span className="font-semibold">Phone:</span> {user.contact}</p>}
+              <p><span className="font-semibold">Email:</span> {profile.email}</p>
+              {profile.contact && <p><span className="font-semibold">Phone:</span> {profile.contact}</p>}
             </div>
             <div className="col-span-12 md:col-span-6 p-4 rounded-lg bg-white/10 border border-zinc-200 shadow-2xl/20 hover:shadow-2xl/60">
               <h3 className="font-bold text-lg mb-2 border-b pb-2">Business Details</h3>
-              <p><span className="font-semibold">Account Type:</span> {user.type}</p>
-              {user.business && <p><span className="font-semibold">Business Name:</span> {user.business}</p>}
+              <p><span className="font-semibold">Account Type:</span> {profile.type}</p>
+              {profile.business && <p><span className="font-semibold">Business Name:</span> {profile.business}</p>}
             </div>
           </div>
           
           {/* Row 2: About Section - Full Width (Only show if about exists) */}
-          {user.about && (
+          {profile.about && (
             <div className=" p-4 rounded-lg bg-white/10 border border-zinc-200 shadow-2xl/20 hover:shadow-2xl/60">
               <h3 className="font-bold text-lg mb-2 border-b pb-2">About Me</h3>
-              <p className="text-gray-700">{user.about}</p>
+              <p className="text-gray-700">{profile.about}</p>
             </div>
           )}
           
           {/* Row 3: Location Details - Only show if any location field exists */}
-          {(user.streetaddress || user.city || user.state || user.country || user.postalcode) && (
+          {(profile.streetaddress || profile.city || profile.state || profile.country || profile.postalcode) && (
             <div className="grid grid-cols-12 gap-4" >
               <div className="col-span-12 md:col-span-6 p-4 rounded-lg bg-white/10 border border-zinc-200 shadow-2xl/20 hover:shadow-2xl/60">
                 <h3 className="font-bold text-lg mb-2 border-b pb-2">Address</h3>
-                {user.streetaddress && <p><span className="font-semibold">Street:</span> {user.streetaddress}</p>}
-                {user.city && <p><span className="font-semibold">City:</span> {user.city}</p>}
-                {user.state && <p><span className="font-semibold">State:</span> {user.state}</p>}
+                {profile.streetaddress && <p><span className="font-semibold">Street:</span> {profile.streetaddress}</p>}
+                {profile.city && <p><span className="font-semibold">City:</span> {profile.city}</p>}
+                {profile.state && <p><span className="font-semibold">State:</span> {profile.state}</p>}
               </div>
               <div className="col-span-12 md:col-span-6 p-4 rounded-lg bg-white/10 border border-zinc-200 shadow-2xl/20 hover:shadow-2xl/60">
                 <h3 className="font-bold text-lg mb-2 border-b pb-2">Location</h3>
-                {user.country && <p><span className="font-semibold">Country:</span> {user.country}</p>}
-                {user.postalcode && <p><span className="font-semibold">Postal Code:</span> {user.postalcode}</p>}
+                {profile.country && <p><span className="font-semibold">Country:</span> {profile.country}</p>}
+                {profile.postalcode && <p><span className="font-semibold">Postal Code:</span> {profile.postalcode}</p>}
               </div>
             </div>
           )}
@@ -121,7 +140,7 @@ const Profile = () => {
               </div>
               <div>
                 <p className="font-semibold">Member Since:</p>
-                <p>{new Date(user.createdAt).toLocaleDateString('en-IN', {
+                <p>{new Date(profile.createdAt).toLocaleDateString('en-IN', {
                   day: 'numeric',
                   month: 'long',
                   year: 'numeric'
@@ -139,12 +158,12 @@ const Profile = () => {
               className="px-5 py-2 bg-white/10 cursor-pointer shadow-xl/20 hover:shadow-xl/40 rounded-lg text-gray-800/80 " >
               Posts
             </button>
-            <button
+            {isOwnProfile && <button
             onClick={createNewPost}
             className="px-5 py-2 bg-blue-500 cursor-pointer shadow-xl/40 hover:shadow-xl/60 rounded-lg text-white/90"
             >
               Create Post
-            </button>
+            </button>}
           </div>
           <div>
             <div className="w-full min-h-screen  rounded-lg" >
@@ -163,12 +182,12 @@ const Profile = () => {
                 ) : (
                 <div className="text-center items-center py-20">
                     <h2 className="text-xl font-semibold text-zinc-700">No Post Found </h2>
-                    <button
+                    {isOwnProfile && <button
                     onClick={createNewPost}
                     className="px-5 py-2 bg-blue-500 cursor-pointer shadow-xl/40 hover:shadow-xl/60 rounded-lg text-white/90"
                     >
                       Create First Post
-                    </button>
+                    </button>}
                 </div>
                 )}          
             </div>

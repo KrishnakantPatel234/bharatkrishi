@@ -24,10 +24,6 @@ const Login = () => {
     e.preventDefault();
 
     try{
-
-      // const response = await API.post("/auth/login" , formData , {
-      //   withCredentials: true
-      // });
       await login(formData);
       navigate("/profile");
     }catch(error){
