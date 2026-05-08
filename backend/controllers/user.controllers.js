@@ -1,4 +1,5 @@
 import User from "../models/user.models.js";
+import mongoose from "mongoose";
 
 const getUsers = async (req, res) => {
   try {
@@ -44,10 +45,18 @@ const getUser = async (req , res) => {
     try{    
         const {id} = req.params;
 
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({
+                success : false,
+                message: "Invalid user ID"
+            });
+        }
+
         const user = await User.findById(id).select("-password");
 
         if(!user){
-            res.status(404).json({
+            return res.status(404).json({
+                success : false,
                 message : "User not found"
             })
         }
@@ -59,12 +68,38 @@ const getUser = async (req , res) => {
     }
     catch(error){
         res.status(500).json({
-            message : error.message
+            success: false,
+            message: error.message
         });
     }
 }
 
+const getUserDetails = async (req, res) => {
+    try {
+        // Fresh data from database
+        const user = await User.findById(req.user._id).select("-password");
+        
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+        
+        res.status(200).json({
+            success: true,
+            user
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
 export {
     getUsers,
-    getUser
+    getUser,
+    getUserDetails
 }

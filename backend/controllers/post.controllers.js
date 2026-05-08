@@ -1,5 +1,6 @@
 import Post from "../models/post.models.js";
 import cloudinary from "../config/cloudinary.js";
+import mongoose from "mongoose";
 
 const createNewPost = async (req , res) => {
     try{
@@ -98,16 +99,50 @@ const getAllPosts = async (req , res) => {
     }
 }
 
-const getMyPosts = async(req , res) => {
+const getPost = async (req , res) => {
     try{
-        const userId = req.user._id;
+        const {postId} = req.params;
+        
+        let post = await Post.findById(postId).populate("createdby" , "username avatar fullname");
 
-        const posts = await Post.find({ createdby: userId })
+        if(!post){
+            return res.status(404).json({
+                success : false,
+                message : "Post not found"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            post
+        })
+
+
+    }catch(error){
+        return res.status(500).json({
+            success : false,
+            message : error.message
+        })
+    }
+}
+
+const getUserPosts = async(req , res) => {
+    try{
+        const id = req.params.id || req.user?._id;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid user ID"
+            });
+        }
+
+        const posts = await Post.find({ createdby: id })
             .populate("createdby", "fullname avatar username")    
             .sort({ createdAt: -1 });
 
         if(posts.length === 0){
-            res.status(200).json({
+            return res.status(200).json({
                 success: true,
                 posts
             });
@@ -129,5 +164,6 @@ const getMyPosts = async(req , res) => {
 export {
     getAllPosts,
     createNewPost,
-    getMyPosts
+    getPost,
+    getUserPosts
 }

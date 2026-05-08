@@ -35,9 +35,9 @@ const userSchema = new mongoose.Schema({
         select : false
     },
     contact : {
-        type : String,   //     ✅ String
+        type : String,   // String
         trim : true,
-        match: [/^[0-9]{12}$/, "Please enter valid 10-digit phone number"]  // ✅ validation
+        match: [/^[0-9]{12}$/, "Please enter valid 10-digit phone number"]  // validation
     },
     type : {
         type : String,

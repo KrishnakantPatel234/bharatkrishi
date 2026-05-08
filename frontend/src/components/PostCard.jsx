@@ -1,25 +1,42 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const PostCard = ({post}) => {
+    const navigate = useNavigate();
+
+    const viewPost = () => {
+        const postId = post._id;
+        navigate(`/posts/${postId}`) 
+    }
+
+    const viewProfile = () => {
+        const id = post.createdby?._id;
+        navigate(`/users/${id}`);
+    }
 
 
     return(
-        <div className="post w-full p-4 rounded-xl text-zinc-800 shadow-xl/60"  >
+        <div className="post w-full min-h-[600px] p-4 rounded-xl text-zinc-800 shadow-xl/60"  >
             <div className="flex items-center gap-3 p-4">
                 <img
                     src={post.createdby?.avatar || "/images/default-user.png"}
                     alt={post.createdby?.username}
-                    className="w-10 h-10 rounded-full object-cover border"
+                    onClick={viewProfile}
+                    className="w-10 h-10 rounded-full object-cover border cursor-pointer"
                 />
                 <div>
-                    <h2 className="text-sm font-semibold text-zinc-800">
+                    <h2 onClick={viewProfile} className="text-sm cursor-pointer font-semibold text-zinc-800">
                     @{post.createdby?.username}
                     </h2>
                     <p className="text-xs text-zinc-500">{post.createdby?.fullname}</p>
                 </div>
             </div>
             <div className="w-full aspect-[4/3] bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden" >
-                <img className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" src={post.picture || "images/logo.png"} alt={post.title} />
+                <img 
+                onClick={viewPost}
+                className="w-full h-full object-cover cursor-pointer transition-transform duration-300 hover:scale-105" 
+                src={post.picture || "images/logo.png"} 
+                alt={post.title} />
             </div>
             <div className=" mt-5 ml-3  story-script-para">
                 <h1 className="font-bold mb-2 text-2xl" >{post.title}</h1>
@@ -41,7 +58,9 @@ const PostCard = ({post}) => {
                     </span>
                 </p>
 
-                <button className="bg-blue-600 hover:bg-blue-700 text-white cursor-pointer text-sm font-semibold px-4 py-2 rounded-xl transition">
+                <button 
+                onClick={viewPost}
+                className="bg-blue-600 hover:bg-blue-700 text-white cursor-pointer text-sm font-semibold px-4 py-2 rounded-xl transition">
                     View
                 </button>
             </div>
