@@ -37,11 +37,8 @@ export const AuthProvider = ({ children }) => {
         return response.data;
     }
 
-   const login = async (credentials) => {
-        await API.post("/auth/login", credentials);
-
-        // Re-fetch because cookies are not available quickly
-        const response = await API.get("/auth/login", credentials);
+    const login = async (credentials) => {
+        const response = await API.post("/auth/login", credentials);
         setUser(response.data.user);
         return response.data;
     }
