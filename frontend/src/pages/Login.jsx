@@ -8,6 +8,7 @@ const Login = () => {
   const navigate = useNavigate();
   const {login} = useAuth();
 
+  const [loading , setLoading] = useState(false);
   const [formData , setFormData] = useState({
     email : "",
     password : ""
@@ -22,6 +23,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try{
       await login(formData);
@@ -29,8 +31,18 @@ const Login = () => {
     }catch(error){
       console.error("Something went wrong : ", error.response?.data || error.message);
     }
+    finally{
+      setLoading(false);
+    }
   }
 
+  if(loading){
+    return (
+        <div className="w-full min-h-screen" >
+          <LoadingState />
+        </div>
+    )
+  }
 
   return (
     <form onSubmit={handleSubmit}>

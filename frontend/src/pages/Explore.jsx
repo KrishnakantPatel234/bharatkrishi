@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import API from "../api";
 import PostCard from "../components/PostCard";
+import LoadingPosts from "../components/LoadingPosts";
 
 const Explore = () => {
 
@@ -84,8 +85,8 @@ const Explore = () => {
             </form>
             <div className="w-full min-h-screen  rounded-lg" >
                 {loading ? (
-                <div className="text-center py-20 text-zinc-600 text-lg">
-                    Loading users...
+                <div className="text-center mt-8 text-zinc-600 text-lg">
+                    <LoadingPosts />
                 </div>
                 ) : posts.length > 0 ? (
                 <div 
