@@ -170,19 +170,6 @@
                 <p className="mt-1 text-sm/6 text-gray-400" >Write a few sentences about yourself.</p>
               </div>
 
-              {/* photo */}
-              <div className="col-span-full mt-5">
-                <label htmlFor="photo" className="block text-sm/6 font-semibold text-zinc-800/80">
-                  Photo
-                </label>
-                <div className="mt-2 flex items-center gap-x-5" >
-                  <FaUserCircle aria-hidden="true" className="size-12 text-gray-500" />
-                  <button type="button" className="rounded-md bg-blue-500 cursor-pointer px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-blue-600" >
-                    Change
-                  </button>
-                </div>
-              </div>
-
               {/* profile picture */}
               <div className="col-span-full mt-5">
                 <label htmlFor="profile-picture" className="block text-sm/6 font-semibold text-zinc-800/80">

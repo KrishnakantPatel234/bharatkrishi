@@ -13,6 +13,7 @@
     import userRoutes from "./routes/user.routes.js"
     import postRoutes from "./routes/post.routes.js";
     import commentRoutes from "./routes/comments.routes.js";
+    import chatRoutes from "./routes/chatbot.routes.js";
 
     const PORT = process.env.PORT || 3000;
     const app = express();
@@ -22,8 +23,8 @@
 
     // CORS CONFIGURATIONS
     app.use(cors({
-        // origin : 'https://bharatkrishimarket.vercel.app',
-        origin : "http://localhost:5173",
+        origin : 'https://bharatkrishimarket.vercel.app',
+        // origin : "http://localhost:5173",
         credentials : true,                 
         methods : ["GET" , "POST" , "PUT" , "DELETE"],
         allowedHeaders : ["Content-Type" , "Authorization"]
@@ -47,6 +48,8 @@
     app.use("/api/users" , userRoutes);
     app.use("/api/posts" , postRoutes);
     app.use("/api/comments" , commentRoutes);
+    app.use("/api/mitra" , chatRoutes);
+
 
     export default app;
 

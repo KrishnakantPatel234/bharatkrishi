@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import API from '../api'
 import { useAuth } from '../hooks/useAuth.js'
+import LoadingState from "../components/LoadingState.jsx"
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,7 +25,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try{
       await login(formData);
       navigate("/profile");
