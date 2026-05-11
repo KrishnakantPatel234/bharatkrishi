@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL : "http://localhost:3000/api/",
-    // baseURL: "https://bharatkrishi.vercel.app/",
+    // baseURL : "http://localhost:3000/api/",
+    baseURL: "https://bharatkrishi.vercel.app/",
     withCredentials: true,  
 });
 
