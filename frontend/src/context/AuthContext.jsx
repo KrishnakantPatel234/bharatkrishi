@@ -30,18 +30,18 @@ export const AuthProvider = ({ children }) => {
         checkAuth();
     }, []);
 
-    const register = async (userData) => {
-        const response = await API.post("/auth/register" , userData);
-        
-        setUser(response.data.user);
-        return response.data;
-    }
+        const register = async (userData) => {
+            const response = await API.post("/auth/register" , userData);
+            
+            setUser(response.data.user);
+            return response.data;
+        }
 
-    const login = async (credentials) => {
-        const response = await API.post("/auth/login", credentials);
-        setUser(response.data.user);
-        return response.data;
-    }
+        const login = async (credentials) => {
+            const response = await API.post("/auth/login", credentials);
+            setUser(response.data.user);
+            return response.data;
+        }
 
 
     const logout = async () => {
