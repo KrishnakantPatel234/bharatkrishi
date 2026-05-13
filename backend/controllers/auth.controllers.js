@@ -6,7 +6,7 @@ import cloudinary from "../config/cloudinary.js";
 const cookieOptions = {
     httpOnly: true,
     secure: false,
-    sameSite: "lax"
+    sameSite: "none"
 };
 
 const registerUser = async (req , res) => {
