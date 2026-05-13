@@ -5,7 +5,7 @@ import cloudinary from "../config/cloudinary.js";
 
 const cookieOptions = {
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: "none"
 };
 
