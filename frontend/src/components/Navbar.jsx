@@ -79,16 +79,14 @@ const Navbar = () => {
       <nav className="w-full max-w-7xl mx-auto grid grid-cols-12 items-center px-4 md:px-8 py-4">
 
         {/* LOGO */}
-        <div className="col-span-6 md:col-span-2 w-32 h-1 -mt-24 ml-6">
-
-          <a href="/">
+        <div className="col-span-6 md:col-span-2 flex items-center">
+          <Link to="/">
             <img
-              className="h-25"
+              className="h-12 w-auto object-contain"
               src="/images/logo.png"
               alt="logo"
             />
-          </a>
-
+          </Link>
         </div>
 
         {/* DESKTOP MENU */}
@@ -125,7 +123,7 @@ const Navbar = () => {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="col-span-6 md:col-span-2 flex justify-end items-center mr-16">
+        <div className="col-span-6 md:col-span-2 flex justify-end items-center">
 
           {/* DESKTOP AUTH */}
           <div

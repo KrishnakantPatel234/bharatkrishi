@@ -83,11 +83,10 @@ const About = () => {
       </div>
 
       {/* WHY US */}
-      <div className="py-24 px-6 relative">
-        <div className="absolute inset-0 bg-slate-900 -z-20"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-900/40 to-emerald-900/40 -z-10"></div>
+      <div className="py-24 px-6 relative bg-slate-900 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-900/40 to-emerald-900/40 pointer-events-none"></div>
         
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-16">
                 <span className="text-emerald-400 font-semibold tracking-wider uppercase text-sm">Value Proposition</span>
                 <h2 className="text-4xl md:text-5xl font-bold text-white mt-2">
@@ -141,8 +140,8 @@ const About = () => {
             and lack of market access, we created a platform where transactions
             are direct, transparent, and fair.
             </p>
-            <div className="inline-block p-1 bg-gradient-to-r from-primary-500 to-emerald-500 rounded-2xl shadow-xl shadow-primary-500/20">
-                <button className="px-8 py-4 bg-white text-primary-700 rounded-xl font-bold text-lg hover:bg-transparent hover:text-white transition-all duration-300">
+            <div>
+                <button className="px-8 py-4 bg-white border-2 border-primary-500 text-primary-700 rounded-xl font-bold text-lg hover:bg-primary-600 hover:text-white hover:border-primary-600 shadow-xl shadow-primary-500/20 transition-all duration-300">
                     Join the Movement
                 </button>
             </div>

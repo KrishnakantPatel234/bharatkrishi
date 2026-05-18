@@ -32,7 +32,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="font-sans mx-auto max-w-7xl px-6 relative">
+    <div className="font-sans mx-auto max-w-7xl px-4 sm:px-6 relative overflow-hidden">
       
       {/* Decorative Blur Blobs */}
       <div className="absolute top-0 left-20 w-72 h-72 bg-primary-500/20 rounded-full blur-3xl -z-10 mix-blend-multiply" />
@@ -44,9 +44,9 @@ const Home = () => {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="md:col-span-6 col-span-12 flex flex-col justify-center"
+          className="md:col-span-6 col-span-1 flex flex-col justify-center text-center md:text-left items-center md:items-start"
         >
-            <div className="space-y-6" >
+            <div className="space-y-6 flex flex-col items-center md:items-start" >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border-primary-500/30 text-primary-700 text-sm font-medium shadow-sm mb-4">
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-500 opacity-75"></span>
@@ -54,14 +54,14 @@ const Home = () => {
                 </span>
                 The Future of Agriculture
               </div>
-              <h2 className="text-dark-900 md:text-6xl text-5xl font-extrabold tracking-tight leading-[1.1]">
+              <h2 className="text-dark-900 md:text-6xl text-3xl sm:text-4xl font-extrabold tracking-tight leading-[1.1]">
                 <span className="block" >Cultivating <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-emerald-400">Connections,</span></span>
                 <span className="block mt-2">Harvesting Trust.</span>
               </h2>
               <p className="text-lg text-slate-600 leading-relaxed max-w-xl">
                 BharatKrishi unites farmers and buyers in a seamless ecosystem. For farmers, it's fair prices and market access. For buyers, it's quality produce and complete transparency.
               </p>
-              <div className="pt-6 flex flex-wrap gap-4">
+              <div className="pt-6 flex flex-wrap gap-4 justify-center md:justify-start">
                 <button 
                   onClick={handleChange}
                   className="group relative overflow-hidden bg-primary-600 text-white font-medium px-8 py-4 rounded-xl shadow-[0_8px_30px_rgb(16,185,129,0.3)] hover:shadow-[0_8px_30px_rgb(16,185,129,0.5)] transition-all duration-300 hover:-translate-y-1">
@@ -82,28 +82,30 @@ const Home = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="md:col-span-6 col-span-12 relative"
+          className="md:col-span-6 col-span-1 relative mt-12 md:mt-0 flex justify-center md:block"
         >
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/5 aspect-[4/3]">
-            <img className="object-cover w-full h-full transform hover:scale-105 transition-transform duration-700" src="/images/indian-farmer.jpg" alt="Indian farmer smiling" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+          <div className="relative w-full max-w-[250px] sm:max-w-[320px] md:max-w-none mx-auto md:mx-0">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/5 aspect-[4/3] md:aspect-[4/3]">
+              <img className="object-cover w-full h-full transform hover:scale-105 transition-transform duration-700" src="/images/indian-farmer.jpg" alt="Indian farmer smiling" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+            </div>
+            
+            {/* Floating badge */}
+            <motion.div 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="absolute -bottom-6 left-1/2 -translate-x-1/2 md:-left-6 md:translate-x-0 glass px-4 md:px-6 py-3 rounded-2xl shadow-xl flex items-center justify-center gap-3 w-[95%] md:w-auto md:min-w-max"
+            >
+              <div className="bg-primary-100 text-primary-600 p-2 md:p-3 rounded-full shrink-0">
+                <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+              </div>
+              <div className="truncate">
+                <p className="text-xs md:text-sm text-slate-500 font-medium">Direct Trade</p>
+                <p className="text-sm md:text-base font-bold text-dark-900 truncate">0% Middlemen</p>
+              </div>
+            </motion.div>
           </div>
-          
-          {/* Floating badge */}
-          <motion.div 
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
-            className="absolute -bottom-6 -left-6 glass px-6 py-4 rounded-2xl shadow-xl flex items-center gap-4"
-          >
-            <div className="bg-primary-100 text-primary-600 p-3 rounded-full">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-            </div>
-            <div>
-              <p className="text-sm text-slate-500 font-medium">Direct Trade</p>
-              <p className="font-bold text-dark-900">0% Middlemen</p>
-            </div>
-          </motion.div>
         </motion.div>
       </div>
 
