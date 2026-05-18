@@ -74,9 +74,9 @@ const Navbar = () => {
 
   return (
 
-    <header className="w-full bg-white/70 backdrop-blur border-b border-gray-200 sticky top-0 z-50">
+    <header className="w-full glass sticky top-0 z-50 border-b border-primary-500/10 transition-all duration-300">
 
-      <nav className="w-full grid grid-cols-12 items-center px-4 md:px-8 py-3">
+      <nav className="w-full max-w-7xl mx-auto grid grid-cols-12 items-center px-4 md:px-8 py-4">
 
         {/* LOGO */}
         <div className="col-span-6 md:col-span-2 w-32 h-1 -mt-24 ml-6">
@@ -92,32 +92,32 @@ const Navbar = () => {
         </div>
 
         {/* DESKTOP MENU */}
-        <div className="hidden md:flex col-span-8 justify-center lg:gap-24 md:gap-16 gap-8 text-base font-medium text-gray-700">
+        <div className="hidden md:flex col-span-8 justify-center lg:gap-16 md:gap-12 gap-8 text-sm font-semibold tracking-wide text-slate-600">
 
           <Link
             to="/explore"
-            className="hover:text-black"
+            className="hover:text-primary-600 transition-colors"
           >
             Explore
           </Link>
 
           <Link
             to="/connect"
-            className="hover:text-black"
+            className="hover:text-primary-600 transition-colors"
           >
             Connect
           </Link>
 
           <Link
             to="/mitra"
-            className="hover:text-black"
+            className="hover:text-primary-600 transition-colors"
           >
             Mitra
           </Link>
 
           <Link
             to="/aboutus"
-            className="hover:text-black"
+            className="hover:text-primary-600 transition-colors"
           >
             About
           </Link>
@@ -179,7 +179,7 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={() => navigate("/login")}
-                className="px-4 py-2 text-sm bg-green-600 text-white rounded-lg cursor-pointer hover:bg-green-700"
+                className="px-6 py-2.5 text-sm font-semibold bg-primary-600 text-white rounded-xl shadow-[0_4px_14px_0_rgb(16,185,129,0.39)] hover:shadow-[0_6px_20px_rgba(16,185,129,0.23)] hover:bg-primary-700 transition-all hover:-translate-y-0.5 cursor-pointer"
               >
                 Sign In
               </button>

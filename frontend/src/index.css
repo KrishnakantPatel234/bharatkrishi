@@ -2,11 +2,30 @@
 
 @plugin "@tailwindcss/typography";
 
+@theme {
+  --color-primary-50: #ecfdf5;
+  --color-primary-100: #d1fae5;
+  --color-primary-500: #10b981;
+  --color-primary-600: #059669;
+  --color-primary-700: #047857;
+  --color-dark-900: #0f172a;
+  --color-dark-800: #1e293b;
+}
+
+:root {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
 body {
-    background-color :whitesmoke;
-    overflow-x: hidden;
-    margin : 0;
-    padding : 0;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at top left, #ecfdf5, transparent 40%),
+              radial-gradient(circle at bottom right, #d1fae5, transparent 40%);
+  background-attachment: fixed;
+  background-color: #f8fafc;
 }
 
 .story-script-regular {
@@ -18,4 +37,24 @@ body {
   font-family: "Story Script", sans-serif;
   font-weight: 300;
   font-style: normal;
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-dark {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Smooth transitions */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
