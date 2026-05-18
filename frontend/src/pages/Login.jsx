@@ -1,9 +1,9 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import API from '../api'
 import { useAuth } from '../hooks/useAuth.js'
 import LoadingState from "../components/LoadingState.jsx"
+import { motion } from "framer-motion"
 
 const Login = () => {
   const navigate = useNavigate();
@@ -38,83 +38,90 @@ const Login = () => {
 
   if(loading){
     return (
-        <div className="w-full min-h-screen" >
+        <div className="w-full min-h-screen flex items-center justify-center bg-slate-50/50" >
           <LoadingState />
         </div>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="w-full min-h-[795px] flex justify-center items-center">
-        <div className="min-w-4/5 md:min-w-1/3 min-h-[500px] story-script-para bg-white/5 rounded-xl shadow-2xl ">
-          {/* email field */}
-          <div className="m-10 mt-20" >
-            <label 
-              htmlFor="email"
-              className="after:ml-0.5 after:text-red-500 after:content-['*']"
-            >
-              Email
+    <div className="w-full min-h-[90vh] flex justify-center items-center relative overflow-hidden px-4">
+      {/* Decorative Blur Backgrounds */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-400/20 rounded-full blur-3xl -z-10 mix-blend-multiply" />
+      <div className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-emerald-300/20 rounded-full blur-3xl -z-10 mix-blend-multiply" />
+
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="w-full max-w-md glass rounded-3xl shadow-2xl p-8 md:p-10 border border-white"
+      >
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-extrabold text-dark-900 tracking-tight">Welcome Back</h2>
+          <p className="text-slate-500 mt-2 font-medium">Sign in to your BharatKrishi account</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          
+          <div>
+            <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">
+              Email Address <span className="text-red-500">*</span>
             </label>
-            <div className="mt-2" >
-              <div className="flex items-center rounded-md pl-3 py-1 outline-1 -outline-offset-1 outline-zinc-400 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-500" >
-                <input 
-                  id="email" 
-                  name="email" 
-                  type="email" 
-                  autoComplete="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="jhondoe@example.com"
-                  className="block min-w-0 grow bg-transparent py-1.5 pr-3 pl-1 outline-nono focus:outline-none placeholder:text-gray-400 w-full"
-                />
-              </div>
+            <div className="relative">
+              <input 
+                id="email" 
+                name="email" 
+                type="email" 
+                required
+                autoComplete="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="jhondoe@example.com"
+                className="w-full bg-white/60 border border-slate-200 text-dark-900 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 focus:bg-white transition-all placeholder:text-slate-400 shadow-sm"
+              />
             </div>
           </div>
-          {/* password field */}
-          <div className="m-10" >
-            <label 
-              htmlFor="password"
-              className="after:ml-0.5 after:text-red-500 after:content-['*']"
-            >
-              Password
+          
+          <div>
+            <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-2">
+              Password <span className="text-red-500">*</span>
             </label>
-            <div className="mt-2" >
-              <div className="flex items-center rounded-md pl-3 py-1 outline-1 -outline-offset-1 outline-zinc-400 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-500" >
-                <input 
-                  id="password" 
-                  name="password" 
-                  type="password" 
-                  autoComplete="current-password"
-                  value={formData.password}
-                  onChange={handleChange} 
-                  className="block min-w-0 grow bg-transparent py-1.5 pr-3 pl-1 outline-none focus:outline-none placeholder:text-gray-400 w-full"
-                />
-              </div>
+            <div className="relative">
+              <input 
+                id="password" 
+                name="password" 
+                type="password" 
+                required
+                autoComplete="current-password"
+                value={formData.password}
+                onChange={handleChange} 
+                placeholder="••••••••"
+                className="w-full bg-white/60 border border-slate-200 text-dark-900 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 focus:bg-white transition-all placeholder:text-slate-400 shadow-sm"
+              />
             </div>
           </div>
 
-          <div className="m-10">
-            <p className="story-script-para" >
-              if you do not have an account
-              <span 
-                onClick={() => navigate("/register")}
-                className="text-indigo-500 ml-1 hover:text-indigo-600 cursor-pointer">
-                  create an account
-              </span>
-            </p>
-          </div>
-
-          <div className="mt-15 flex justify-center">
+          <div className="pt-2">
             <button 
-            type="submit" 
-            className="bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-600">
-              Signin
+              type="submit" 
+              className="w-full bg-primary-600 text-white font-bold text-lg py-3.5 rounded-xl shadow-lg shadow-primary-500/30 hover:bg-primary-700 hover:-translate-y-0.5 transition-all"
+            >
+              Sign In
             </button>
           </div>
-        </div>
-      </div>
-    </form>
+
+          <p className="text-center text-slate-500 text-sm mt-8 font-medium">
+            Don't have an account?{' '}
+            <span 
+              onClick={() => navigate("/register")}
+              className="text-primary-600 hover:text-primary-700 font-bold cursor-pointer transition-colors"
+            >
+              Create an account
+            </span>
+          </p>
+        </form>
+      </motion.div>
+    </div>
   )
 }
 
